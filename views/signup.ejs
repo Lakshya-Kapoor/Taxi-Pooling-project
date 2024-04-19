@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Action Kamen Login Page</title>
+    <link rel="stylesheet" href="login.css" />
+    <link rel="stylesheet" href="mediaQuerries.css" />
+  </head>
+  <body>
+    <section class="first-page signup-section">
+      <div class="login-wrapper">
+        <img src="Logo.png" alt="icon" class="logo"/>
+        <h1 id="login-heading" class="unselectable">Create a website account</h1>
+        <p class="p-style1 unselectable">to continue to website</p>
+      </div>
+      <form class="info-wrapper" action="/signup" method="post">
+        <input type="text" class="text-input rollno-input" placeholder="Roll no" name="rollNo"/>
+        <input type="text" class="text-input" id="name-input" placeholder="Name" name="name"/>
+        <input type="text" class="text-input" id="phoneNo-input" placeholder="Phone number" name="phoneNo"/>
+        <input type="password" class="text-input" id="pswd-input2" placeholder="Password" name="password"/>
+        <div class="toggle-show-pswd">
+          <button onclick="togglePassword('2')" class="toggle-btn" type="button">
+            <img src="show_pswd.svg" alt="toggle-icon" id="toggle-icon2" />
+          </button>
+          <p class="p-style1 unselectable" id="toggle-text2">Show password</p>
+        </div>
+        <div class="btns">
+          <button class="unselectable" type="submit">Create account</button>
+          <button class="unselectable" type="button" id="login">Login</button>
+        </div>
+      </form>
+    </section>
+    <script src="login.js"></script>
+  </body>
+  </html>

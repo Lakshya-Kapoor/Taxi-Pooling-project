@@ -1,0 +1,192 @@
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap");
+
+:root {
+  --shadow-color: 110deg 36% 36%;
+  --shadow-elevation-high:
+    0.8px 1px 1px hsl(var(--shadow-color) / 0.63),
+    1.4px 1.7px 1.8px -0.5px hsl(var(--shadow-color) / 0.57),
+    2.8px 3.2px 3.4px -1px hsl(var(--shadow-color) / 0.52),
+    5.7px 6.6px 6.9px -1.6px hsl(var(--shadow-color) / 0.46),
+    11.1px 12.8px 13.5px -2.1px hsl(var(--shadow-color) / 0.4),
+    19.8px 22.8px 24px -2.6px hsl(var(--shadow-color) / 0.34),
+    32.7px 37.7px 39.7px -3.1px hsl(var(--shadow-color) / 0.28),
+    50.6px 58.3px 61.4px -3.7px hsl(var(--shadow-color) / 0.22),
+    74.4px 85.6px 90.2px -4.2px hsl(var(--shadow-color) / 0.16),
+    105px 120.8px 127.2px -4.7px hsl(var(--shadow-color) / 0.1);
+}
+:root {
+  --shadow-color2: 106deg 31% 47%;
+  --shadow-elevation-medium2:
+    0.2px 0.2px 0.3px hsl(var(--shadow-color2) / 0.36),
+    0.7px 0.6px 1px -0.8px hsl(var(--shadow-color2) / 0.36),
+    1.7px 1.5px 2.6px -1.7px hsl(var(--shadow-color2) / 0.36),
+    4.2px 3.7px 6.3px -2.5px hsl(var(--shadow-color2) / 0.36);
+  --shadow-elevation-high2:
+    0.2px 0.2px 0.3px hsl(var(--shadow-color2) / 0.34),
+    1.2px 1.1px 1.8px -0.4px hsl(var(--shadow-color2) / 0.34),
+    2.3px 2px 3.4px -0.7px hsl(var(--shadow-color2) / 0.34),
+    3.8px 3.3px 5.7px -1.1px hsl(var(--shadow-color2) / 0.34),
+    6.1px 5.3px 9.1px -1.4px hsl(var(--shadow-color2) / 0.34),
+    9.5px 8.3px 14.2px -1.8px hsl(var(--shadow-color2) / 0.34),
+    14.4px 12.7px 21.6px -2.1px hsl(var(--shadow-color2) / 0.34),
+    21.2px 18.7px 31.8px -2.5px hsl(var(--shadow-color2) / 0.34);
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "League Spartan", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  /* color: white; */
+  background-image: linear-gradient(
+  305deg,
+  hsl(73deg 72% 75%) 0%,
+  hsl(82deg 66% 74%) 9%,
+  hsl(91deg 60% 72%) 18%,
+  hsl(102deg 54% 71%) 26%,
+  hsl(117deg 47% 70%) 34%,
+  hsl(137deg 45% 65%) 42%,
+  hsl(150deg 43% 59%) 51%,
+  hsl(160deg 41% 53%) 59%,
+  hsl(173deg 50% 46%) 68%,
+  hsl(182deg 79% 37%) 78%,
+  hsl(188deg 100% 34%) 88%,
+  hsl(194deg 77% 38%) 100%
+);
+}
+
+.first-page {
+  display: flex;
+  gap: 2rem;
+  background-color: rgb(255, 255, 255, 0.2);
+  width: 1000px;
+  max-width: 85%;
+  padding: 2rem;
+  border-radius: 1.75rem;
+  overflow-y: auto;
+  box-shadow: var(--shadow-elevation-high);
+}
+
+.login-info,
+.login-wrapper,
+.info-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.login-wrapper {
+  justify-content: start;
+  align-items: start;
+  gap: 1.5rem;
+}
+
+.login-info,
+.info-wrapper {
+  justify-content: center;
+  align-items: start;
+  gap: 1rem;
+}
+
+.text-input {
+  width: 500px;
+  padding: 10px 0;
+  font-size: 1.3rem;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid black;
+  background: transparent;
+  /* color: white; */
+}
+
+::placeholder {
+  color: black;
+}
+
+.rollno-input {
+  margin-top: 80px;
+}
+
+.btns {
+  margin-top: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btns button {
+  border: none;
+  font-size: 0.9rem;
+  padding: 12px 25px;
+  border-radius: 1.5rem;
+  background-color: rgb(255, 255, 255, 0.4);
+  box-shadow: var(--shadow-elevation-medium2);
+  transition: all 300ms ease;
+  border: 1px solid rgb(255, 255, 255, 0);
+}
+
+.btns button:hover {
+  border: 1px solid rgb(0, 0, 0, 0);
+  cursor: pointer;
+  background-color: rgb(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-elevation-high2);
+}
+
+#question {
+  margin-top: 30px;
+}
+.p-style1 {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.toggle-show-pswd {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#login-heading {
+  font-size: 3rem;
+  font-weight: 400;
+}
+
+.logo {
+  width: 50px;
+  height: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+.unselectable {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+button a {
+  text-decoration: none;
+  color: black;
+}

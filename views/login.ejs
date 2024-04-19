@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Action Kamen Login Page</title>
+    <link rel="stylesheet" href="login.css" />
+    <link rel="stylesheet" href="mediaQuerries.css" />
+  </head>
+  <body>
+    <section class="login-section first-page">
+      <div class="login-wrapper">
+        <img src="Logo.png" alt="icon" class="logo" />
+        <h1 id="login-heading" class="unselectable">Log in</h1>
+        <p class="p-style1 unselectable">to continue to website</p>
+      </div>
+      <form class="login-info" method="post" action="/login">
+        <input type="text" class="text-input rollno-input" placeholder="Roll no" name="rollNo"/>
+        <input type="password" class="text-input" id="pswd-input1" placeholder="Password" name="password"/>
+        <div class="toggle-show-pswd">
+          <button onclick="togglePassword('1')" class="toggle-btn" type="button">
+            <img src="show_pswd.svg" alt="toggle-icon" id="toggle-icon1"/>
+          </button>
+          <p class="p-style1 unselectable" id="toggle-text1">Show password</p>
+        </div>
+        <% if (messages.error) {%>
+          <p><%= messages.error  %></p>
+      <% } %>
+        <p class="p-style1 unselectable" id="question">Not logged in? login to start taxi pooling</p>
+        <div class="btns">
+          <button class="unselectable" type="button" id="create-account">Create account</button>
+          <button class="unselectable" type="submit">Login</button>
+        </div>
+      </form>
+    </section>
+    <script src="login.js"></script>
+  </body>
+  </html>

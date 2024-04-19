@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+}
+
+#background-gradient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(
+    305deg,
+    hsl(73deg 72% 75%) 0%,
+    hsl(82deg 66% 74%) 9%,
+    hsl(91deg 60% 72%) 18%,
+    hsl(102deg 54% 71%) 26%,
+    hsl(117deg 47% 70%) 34%,
+    hsl(137deg 45% 65%) 42%,
+    hsl(150deg 43% 59%) 51%,
+    hsl(160deg 41% 53%) 59%,
+    hsl(173deg 50% 46%) 68%,
+    hsl(182deg 79% 37%) 78%,
+    hsl(188deg 100% 34%) 88%,
+    hsl(194deg 77% 38%) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+section {
+  min-height: 100vh;
+}
+
+.credits {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.credits div {
+  font-family: "League Spartan", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 8rem;
+}
+
+.team {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3%;
+}
+
+h2 {
+  font-size: 2rem;
+}
+.about-pic {
+  width: 275px;
+  height: auto;
+  border-radius: 1rem;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.social-media-links a i {
+  font-size: 35px;
+}
+
+.social-media-links {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10%;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 1s;
+}
+
+.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+

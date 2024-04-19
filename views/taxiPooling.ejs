@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taxi Pooling</title>
+    <link rel="stylesheet" href="taxiPooling.css" />
+    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="mediaQuerries.css" />
+  </head>
+  <body class="unselectable">
+    <%- include('navbar') %>
+    <nav id="calendar-nav">
+      <div id="year-month-display">
+        <h3 id="month-display"></h3>
+        <h3 id="year-display"></h3>
+      </div>
+      <div class="arrow-container">
+        <img src="leftArrow.svg" alt="leftArrow" id="leftArrow" onclick="changeCalendar(-1)" />
+        <img src="rightArrow.svg" alt="rightArrow" id="rightArrow" onclick="changeCalendar(1)" />
+      </div>
+    </nav>
+    <ul id="calendar"></ul>
+    <ul id="day-calendar"></ul>
+    <div id="overlay" class="" onclick="closeDayCalendar()"></div>
+    <script src="taxiPooling.js"></script>
+  </body>
+</html>

@@ -1,0 +1,290 @@
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap");
+
+:root {
+  --shadow-color: 156deg 38% 28%;
+  --shadow-elevation-low:
+    0.2px 0.3px 0.3px hsl(var(--shadow-color) / 0.81),
+    0.4px 0.5px 0.5px -2.3px hsl(var(--shadow-color) / 0.56),
+    1.1px 1.5px 1.5px -4.7px hsl(var(--shadow-color) / 0.31);
+  --shadow-elevation-medium:
+    0.2px 0.3px 0.3px hsl(var(--shadow-color) / 0.68),
+    0.4px 0.5px 0.5px -1.2px hsl(var(--shadow-color) / 0.55),
+    1px 1.3px 1.3px -2.3px hsl(var(--shadow-color) / 0.43),
+    2.6px 3.3px 3.3px -3.5px hsl(var(--shadow-color) / 0.3),
+    5.6px 7.3px 7.3px -4.7px hsl(var(--shadow-color) / 0.17);
+  --shadow-elevation-high:
+    0.2px 0.3px 0.3px hsl(var(--shadow-color) / 0.63),
+    0.4px 0.6px 0.6px -0.5px hsl(var(--shadow-color) / 0.57),
+    0.8px 1.1px 1.1px -1px hsl(var(--shadow-color) / 0.52),
+    1.7px 2.2px 2.2px -1.6px hsl(var(--shadow-color) / 0.46),
+    3.3px 4.3px 4.3px -2.1px hsl(var(--shadow-color) / 0.4),
+    5.9px 7.6px 7.6px -2.6px hsl(var(--shadow-color) / 0.34),
+    9.7px 12.6px 12.6px -3.1px hsl(var(--shadow-color) / 0.28),
+    15.1px 19.4px 19.5px -3.7px hsl(var(--shadow-color) / 0.22),
+    22.1px 28.6px 28.7px -4.2px hsl(var(--shadow-color) / 0.16),
+    31.2px 40.3px 40.5px -4.7px hsl(var(--shadow-color) / 0.1);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  height: 100vh;
+  position: relative;
+}
+#background-gradient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(
+    305deg,
+    hsl(73deg 72% 75%) 0%,
+    hsl(82deg 66% 74%) 9%,
+    hsl(91deg 60% 72%) 18%,
+    hsl(102deg 54% 71%) 26%,
+    hsl(117deg 47% 70%) 34%,
+    hsl(137deg 45% 65%) 42%,
+    hsl(150deg 43% 59%) 51%,
+    hsl(160deg 41% 53%) 59%,
+    hsl(173deg 50% 46%) 68%,
+    hsl(182deg 79% 37%) 78%,
+    hsl(188deg 100% 34%) 88%,
+    hsl(194deg 77% 38%) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.unselectable {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 0.1fr, repeat(5, 1fr);
+  gap: 1rem;
+  margin: 3% 7%;
+}
+
+.clickable-div {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 50%;
+  border: 1px black solid;
+  aspect-ratio: 1 / 1;
+  padding: 10px;
+  border-radius: 10px;
+  transition: all 300ms ease;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.clickable-div:hover {
+  border: 1px rgba(0, 0, 0, 0) solid;
+  box-shadow: var(--shadow-elevation-high);
+  background-color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+}
+
+.date,
+.taxi-pool-no,
+.day-of-week,
+#year-month-display,
+.day {
+  font-family: "League Spartan", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.date {
+  font-size: 1.3rem;
+  font-weight: 400;
+  /* margin-bottom: 40%; */
+}
+
+
+.no-of-taxis {
+  display: flex;
+  gap: 3px;
+  align-items: baseline;
+}
+
+.taxi-pool-no {
+  font-size: 3rem;
+  font-weight: 300;
+  color: black;
+}
+
+.day-of-week {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+#calendar-nav {
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+  margin: 30px 0 15px 0;
+}
+
+#year-month-display h3 {
+  font-weight: 300;
+  font-size: 2rem;
+}
+
+.arrow-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.arrow-container img {
+  width: 50px;
+  height: 50px;
+  transition: all 300ms ease;
+}
+
+.arrow-container img:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+#year-month-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#day-calendar {
+  
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  /* border: 1px solid black; */
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 0;
+  z-index: 10;
+  background-color: #6CC496;
+}
+
+#day-calendar.active {
+  height: 540px;
+  width: 440px;
+  max-height: 80%;
+  max-width: 90%;
+  transition: all 300ms ease-out;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.title .taxi-pool-no {
+  font-size: 2rem;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 10px;
+}
+
+#calendar-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: #6CC496;
+  padding: 15px 0;
+  z-index: 2;
+}
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#overlay {
+  position: fixed;
+  opacity: 0;
+  transition: 200ms ease-in-out;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+#overlay:hover, .hour:hover {
+  cursor: pointer;
+}
+
+#close-icon:hover {
+  cursor: pointer;
+  transition: all 300ms ease;
+}
+
+.day {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.join-pool {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.taxi-event,
+.details {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.hour {
+  border: 1px black solid;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+.taxi-event,
+.join-pool,
+.details {
+  width: 100%;
+}
+
+.taxi-event {
+  padding: 10px;
+  border-top: 1px solid black;
+}
+
+.hidden {
+  display: none;
+}
+
+.tick-icon:hover {
+  cursor: pointer;
+}
+
+
