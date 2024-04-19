@@ -2,16 +2,6 @@
 
 :root {
   --shadow-color: 156deg 38% 28%;
-  --shadow-elevation-low:
-    0.2px 0.3px 0.3px hsl(var(--shadow-color) / 0.81),
-    0.4px 0.5px 0.5px -2.3px hsl(var(--shadow-color) / 0.56),
-    1.1px 1.5px 1.5px -4.7px hsl(var(--shadow-color) / 0.31);
-  --shadow-elevation-medium:
-    0.2px 0.3px 0.3px hsl(var(--shadow-color) / 0.68),
-    0.4px 0.5px 0.5px -1.2px hsl(var(--shadow-color) / 0.55),
-    1px 1.3px 1.3px -2.3px hsl(var(--shadow-color) / 0.43),
-    2.6px 3.3px 3.3px -3.5px hsl(var(--shadow-color) / 0.3),
-    5.6px 7.3px 7.3px -4.7px hsl(var(--shadow-color) / 0.17);
   --shadow-elevation-high:
     0.2px 0.3px 0.3px hsl(var(--shadow-color) / 0.63),
     0.4px 0.6px 0.6px -0.5px hsl(var(--shadow-color) / 0.57),
@@ -33,31 +23,6 @@
 body {
   height: 100vh;
   position: relative;
-}
-#background-gradient {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-image: linear-gradient(
-    305deg,
-    hsl(73deg 72% 75%) 0%,
-    hsl(82deg 66% 74%) 9%,
-    hsl(91deg 60% 72%) 18%,
-    hsl(102deg 54% 71%) 26%,
-    hsl(117deg 47% 70%) 34%,
-    hsl(137deg 45% 65%) 42%,
-    hsl(150deg 43% 59%) 51%,
-    hsl(160deg 41% 53%) 59%,
-    hsl(173deg 50% 46%) 68%,
-    hsl(182deg 79% 37%) 78%,
-    hsl(188deg 100% 34%) 88%,
-    hsl(194deg 77% 38%) 100%
-  );
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-  z-index: -1;
 }
 
 .unselectable {
