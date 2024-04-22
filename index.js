@@ -122,6 +122,26 @@ app.get("/taxi-data-day-wise/:day/:month/:year", checkAuthenticated, async (req,
   res.send(`${noOfTaxis}`);
 });
 
+app.get("/taxi-data-hour-wise/:day/:month/:year/:hour", checkAuthenticated, async (req, res) => {
+  let queryDate = new Date(
+    Number(req.params.year),
+    Number(req.params.month),
+    Number(req.params.day)
+  );
+  queryDate.setHours(0, 0, 0, 0);
+  let queryDateEnd = new Date(queryDate);
+  queryDateEnd.setHours(23, 59, 59, 999);
+
+  let queryTime = Number(req.params.hour);
+  const noOfTaxis = await Taxi.countDocuments({
+     $and: [
+      {date: {$gte: queryDate, $lte: queryDateEnd}},
+      {hours: queryTime} 
+    ]});
+  res.send(`${noOfTaxis}`);
+});
+
+
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();

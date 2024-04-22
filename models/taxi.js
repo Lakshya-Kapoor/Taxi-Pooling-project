@@ -13,7 +13,15 @@ const taxiSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         // required: true,
         ref: 'users'
-    }
+    },
+    hours: {
+        type: Number,
+        required: true
+    },
+    minutes: {
+        type: Number,
+        required: true
+    },
 })
 
 const Taxi = mongoose.model("Taxi", taxiSchema)

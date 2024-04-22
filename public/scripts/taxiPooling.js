@@ -108,13 +108,20 @@ function changeCalendar(num) {
   renderCalendar();
 }
 
-function renderDayCalendar(element) {
+async function renderDayCalendar(element) {
   const dayCalendar = document.querySelector("#day-calendar");
+
   let htmlContent = `
   <div id="calendar-heading">
     <div class="day"></div>
     <img src="close-icon.svg" alt="close-icon" id="close-icon" onclick="closeDayCalendar()">
   </div>`;
+
+  let year = Number(document.querySelector("#year-display").textContent)
+  let month = months.indexOf(document.querySelector("#month-display").textContent)
+  let day = (element.querySelector(".date").textContent)
+  day = Number(day.trim().split(" ")[0])
+
   for (let i = 0; i <= 23; i++) {
     let str;
     if (i <= 8) {
@@ -124,18 +131,19 @@ function renderDayCalendar(element) {
     } else {
       str = i + ":00-" + (i + 1) + ":00";
     }
+    
+    let noOfTaxis = await fetch(`http://localhost:3000/taxi-data-hour-wise/${day}/${month}/${year}/${i}`)
     htmlContent += `<div class="hour" onclick="toggleCabList(this, event)">
     <div class="title">
-      <p class="time-interval">${str}</p>
-      <p class="no-of-taxis  unselectable"><span class='taxi-pool-no'>0</span> taxis</p>
-      <img src="dropdown-icon.svg" alt="dropdown-icon" class="dropdown-icon" onclick="dropDownMenu(this, event)">
-      <img src="dropup-icon.svg" alt="dropup-icon" class="dropup-icon hidden" onclick="dropUp(this, event)">
+    <p class="time-interval">${str}</p>
+    <p class="no-of-taxis unselectable"><span class='taxi-pool-no'>${await noOfTaxis.text()}</span> taxis</p>
+    <img src="dropdown-icon.svg" alt="dropdown-icon" class="dropdown-icon" onclick="dropDownMenu(this, event)">
+    <img src="dropup-icon.svg" alt="dropup-icon" class="dropup-icon hidden" onclick="dropUp(this, event)">
     </div>
     </div>`;
   }
   dayCalendar.innerHTML = htmlContent;
-  document.querySelector(".day").textContent =
-    element.querySelector(".date").textContent;
+  document.querySelector(".day").textContent = element.querySelector(".date").textContent;
   document.querySelector("#overlay").classList.add("active");
   document.querySelector("#day-calendar").classList.add("active");
 }
