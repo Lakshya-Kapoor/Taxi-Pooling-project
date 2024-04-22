@@ -26,7 +26,11 @@ async function main() {
 }
 
 const initializePassport = require("./passport-config");
-initializePassport(passport);
+initializePassport(
+  passport, 
+  async (rollNo) => await User.findOne({rollNo: rollNo}),
+  async (id) => await User.findById(id) 
+);
 
 app.set("view-engine", "ejs");
 app.use(express.static(path.join(__dirname, "/public/styles")));
