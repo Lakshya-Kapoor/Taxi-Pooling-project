@@ -11,6 +11,40 @@
   </head>
   <body>
     <%- include('navbar') %>
+    <div id="mySchedule-wrapper">
+      <div class="new-booking">
+        <h2>Schedule New Taxi</h2>
+        <form>
+          <div class="span-wrapper">
+            <span>
+                <label class="unselectable" for="day">Day:</label>
+                <select name="day" id="day"></select>
+            </span>
+            <span>
+                <label class="unselectable" for="month">Month:</label>
+                <select name="month" id="month"></select>
+            </span>
+            <span>
+                <label class="unselectable" for="year">Year:</label>
+                <select name="year" id="year">Year:</select>
+            </span>
+            <span>
+              <label class="unselectable" for="hour">Hour:</label>
+              <select name="hour" id="hour"></select>
+            </span>
+            <span>
+              <label class="unselectable" for="minutes">Minutes:</label>
+              <select name="minutes" id="minutes"></select>
+            </span>
+          </div>
+          <button type="submit">Schedule</button>
+        </form>
+      </div>
+      <div class="booked-taxi">
+        hel
+      </div>
+    </div>
     <script src="login.js"></script>
+    <script src="mySchedule.js"></script>
   </body>
 </html>

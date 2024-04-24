@@ -82,7 +82,7 @@ app.post(
   })
 );
 
-app.get("/mySchedule", checkAuthenticated, (req, res) => {
+app.get("/mySchedule", /*checkAuthenticated,*/ (req, res) => {
   res.render("mySchedule.ejs");
 });
 
