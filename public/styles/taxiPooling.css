@@ -2,8 +2,7 @@
 
 :root {
   --shadow-color: 156deg 38% 28%;
-  --shadow-elevation-high:
-    0.2px 0.3px 0.3px hsl(var(--shadow-color) / 0.63),
+  --shadow-elevation-high: 0.2px 0.3px 0.3px hsl(var(--shadow-color) / 0.63),
     0.4px 0.6px 0.6px -0.5px hsl(var(--shadow-color) / 0.57),
     0.8px 1.1px 1.1px -1px hsl(var(--shadow-color) / 0.52),
     1.7px 2.2px 2.2px -1.6px hsl(var(--shadow-color) / 0.46),
@@ -78,7 +77,6 @@ body {
   /* margin-bottom: 40%; */
 }
 
-
 .no-of-taxis {
   display: flex;
   gap: 3px;
@@ -133,7 +131,6 @@ body {
 }
 
 #day-calendar {
-  
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -147,7 +144,7 @@ body {
   padding: 20px;
   padding-top: 0;
   z-index: 10;
-  background-color: #6CC496;
+  background-color: #6cc496;
 }
 
 #day-calendar.active {
@@ -177,7 +174,7 @@ body {
   align-items: center;
   position: sticky;
   top: 0;
-  background-color: #6CC496;
+  background-color: #6cc496;
   padding: 15px 0;
   z-index: 2;
 }
@@ -199,7 +196,9 @@ body {
   pointer-events: none;
 }
 
-#overlay:hover, .dropdown-icon, .dropup-icon {
+#overlay:hover,
+.dropdown-icon,
+.dropup-icon {
   cursor: pointer;
 }
 
@@ -251,5 +250,3 @@ body {
 .tick-icon:hover {
   cursor: pointer;
 }
-
-

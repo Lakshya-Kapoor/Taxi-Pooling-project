@@ -82,7 +82,7 @@ app.post(
   })
 );
 
-app.get("/mySchedule", /*checkAuthenticated,*/ (req, res) => {
+app.get("/mySchedule", checkAuthenticated, (req, res) => {
   res.render("mySchedule.ejs");
 });
 
@@ -141,6 +141,83 @@ app.get("/taxi-data-hour-wise/:day/:month/:year/:hour", checkAuthenticated, asyn
   res.send(`${noOfTaxis}`);
 });
 
+app.post('/schedule-new-taxi', checkAuthenticated, (req, res) => {
+  const months = ["January", "February", "March", "April", "May", 
+    "June", "July", "August", "September", "October", "November",
+    "December"
+  ];
+  const day = Number(req.body.day);
+  const month = months.indexOf(req.body.month);
+  const year = Number(req.body.year);
+  const hour = Number(req.body.hour);
+  const minutes = Number(req.body.minutes);
+  const capacity = Number(req.body.capacity);
+  const user = req.user;
+  
+  let date = new Date(year, month, day);
+  let ISOdate = date.toISOString();
+
+  const newTaxi = new Taxi({
+    date: ISOdate,
+    capacity: capacity,
+    hours: hour,
+    minutes: minutes,
+  });
+
+  newTaxi.people.push(user._id);
+
+  newTaxi.save()
+    .then(() => {
+      console.log("New taxi scheduled successfully");
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  res.redirect("/mySchedule");
+});
+
+app.get("/booked-taxis/:day/:month/:year/:hour", checkAuthenticated, async (req, res) => {
+  let queryDate = new Date(
+    Number(req.params.year),
+    Number(req.params.month),
+    Number(req.params.day)
+  );
+  queryDate.setHours(0, 0, 0, 0);
+  let queryDateEnd = new Date(queryDate);
+  queryDateEnd.setHours(23, 59, 59, 999);
+  let queryTime = Number(req.params.hour);
+
+  const taxis = await Taxi.find(
+    {
+      $and: [
+        { date: { $gte: queryDate, $lte: queryDateEnd } },
+        { hours: queryTime },
+      ],
+    },
+    { people: 1, hours: 1, minutes: 1 }
+  );
+
+  const taxiData = [];
+
+  for (const taxi of taxis) {
+    const peopleData = [];
+    for (const person of taxi.people) {
+      peopleData.push(
+        {
+          name: (await User.findById(person, { name: 1, _id: 0 })).name,
+          phoneNo: (await User.findById(person, { phoneNo: 1, _id: 0 })).phoneNo
+        }
+      )
+    }
+    taxiData.push({
+      time: String(taxi.hours) + ":" + String(taxi.minutes),
+      people: peopleData,
+    });
+  };
+  const jsonString = JSON.stringify(taxiData);
+  console.log(jsonString);
+  res.send(jsonString);
+});
 
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {

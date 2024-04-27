@@ -11,7 +11,7 @@ const taxiSchema = new mongoose.Schema({
     },
     people: {
         type: [mongoose.Schema.Types.ObjectId],
-        // required: true,
+        required: true,
         ref: 'users'
     },
     hours: {

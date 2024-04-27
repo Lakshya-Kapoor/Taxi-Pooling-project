@@ -131,7 +131,6 @@ async function renderDayCalendar(element) {
     } else {
       str = i + ":00-" + (i + 1) + ":00";
     }
-    
     let noOfTaxis = await fetch(`http://localhost:3000/taxi-data-hour-wise/${day}/${month}/${year}/${i}`)
     htmlContent += `<div class="hour" onclick="toggleCabList(this, event)">
     <div class="title">
@@ -162,23 +161,48 @@ function toggleCabList(hourDiv) {
   }
 }
 
-function dropDownMenu(element, event) {
+async function dropDownMenu(element, event) {
   if (event != null)
     event.stopPropagation();
   element.parentNode.querySelector(".dropdown-icon").classList.add("hidden");
   element.parentNode.querySelector(".dropup-icon").classList.remove("hidden");
-  let hourDiv = element.parentNode.parentNode;
-  hourDiv.innerHTML += `<div class="taxi-event">
-  <div class="join-pool">
-  <p class="time">10:00</p>
-  <img src="tick.svg" alt="accept" class="tick-icon">
-  </div>
-  <div class="details">
-  <p>Lakshya Kapoor 1234567890</p>
-  <p>Shantanu 1234567890</p>
-  <p>Kaushalraj 1234567890</p>
-  </div>
-  </div>`;
+  
+  let titleDiv = element.parentNode;
+  let hourDiv = titleDiv.parentNode;
+  let dayCalendar = hourDiv.parentNode;
+  let calendarHeading = dayCalendar.querySelector("#calendar-heading");
+  let day = calendarHeading.querySelector(".day").innerText.trim().split(" ")[0];
+  let month = months.indexOf(document.querySelector("#month-display").textContent);
+  let year = document.querySelector("#year-display").textContent;
+  let hour = titleDiv.querySelector(".time-interval").innerText.substring(0, 2);
+  
+  try {
+    let jsonString = await fetch(`http://localhost:3000/booked-taxis/${day}/${month}/${year}/${hour}`);
+    let response = await jsonString.json(); // Parsing the JSON data
+    
+    for (const taxi of response){
+      let peopleData = '';
+      for (const people of taxi.people){
+        console.log(people);
+        console.log(people.name);
+        console.log(people.phoneNo);
+        peopleData += `<p>${people.name} ${people.phoneNo}</p>`;
+      }
+      hourDiv.innerHTML += `
+      <div class="taxi-event">
+        <div class="join-pool">
+          <p class="time">${taxi.time}</p>
+          <img src="tick.svg" alt="accept" class="tick-icon">
+        </div>
+        <div class="details">
+          ${peopleData}
+        </div>
+      </div>`;
+    }
+  } catch(err) {
+    console.log(err);
+  }
+
 }
 
 function dropUp(element, event) {

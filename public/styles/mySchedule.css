@@ -1,92 +1,93 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-    height: 100vh;
-    position: relative;
+  height: 100vh;
+  position: relative;
 }
 
 #mySchedule-wrapper {
-    margin-top: 20px;
-    padding: 0px 30px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
+  margin-top: 20px;
+  padding: 0px 30px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
 }
 
 select {
-    appearance: none;
-    border: 1px black solid;
-    background-color: rgba(255, 255, 255, 0.1);
-    outline: none;
-    padding: 0;
+  appearance: none;
+  border: 1px black solid;
+  background-color: rgba(255, 255, 255, 0.1);
+  outline: none;
+  padding: 0;
 }
 
 span select {
-    width: 100px;
+  width: 100px;
 }
 
 span select::after {
-    content: '\25BC';
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    pointer-events: none;
+  content: "\25BC";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .unselectable {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none; 
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .new-booking {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10%;
 }
 
-.new-booking, .booked-taxi {
-    border: 1px rgba(0, 0, 0, 0.5) solid;
-    padding: 5px;
-    aspect-ratio: 1 / 1;
-    border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
+.new-booking,
+.booked-taxi {
+  border: 1px rgba(0, 0, 0, 0.5) solid;
+  padding: 5px;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .span-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .span-wrapper span {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 form button {
-    border: none;
-    font-size: 0.9rem;
-    padding: 10px 20px;
-    border-radius: 1.5rem;
-    background-color: rgb(255, 255, 255, 0.4);
-    transition: all 300ms ease;
-    border: 1px solid rgb(255, 255, 255, 0);
+  border: none;
+  font-size: 0.9rem;
+  padding: 10px 20px;
+  border-radius: 1.5rem;
+  background-color: rgb(255, 255, 255, 0.4);
+  transition: all 300ms ease;
+  border: 1px solid rgb(255, 255, 255, 0);
 }

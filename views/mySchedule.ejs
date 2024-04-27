@@ -6,7 +6,7 @@
     <title>My Schedule</title>
     <link rel="stylesheet" href="mySchedule.css" />
     <link rel="stylesheet" href="navbar.css" />
-    <link rel="stylesheet" href="background-gradient.css">
+    <link rel="stylesheet" href="background-gradient.css" />
     <link rel="stylesheet" href="mediaQuerries.css" />
   </head>
   <body>
@@ -14,19 +14,21 @@
     <div id="mySchedule-wrapper">
       <div class="new-booking">
         <h2>Schedule New Taxi</h2>
-        <form>
+        <form action="/schedule-new-taxi" method="post">
           <div class="span-wrapper">
             <span>
-                <label class="unselectable" for="day">Day:</label>
-                <select name="day" id="day"></select>
+              <label class="unselectable" for="day">Day:</label>
+              <select name="day" id="day"></select>
             </span>
             <span>
-                <label class="unselectable" for="month">Month:</label>
-                <select name="month" id="month"></select>
+              <label class="unselectable" for="month">Month:</label>
+              <select name="month" id="month"></select>
             </span>
             <span>
-                <label class="unselectable" for="year">Year:</label>
-                <select name="year" id="year">Year:</select>
+              <label class="unselectable" for="year">Year:</label>
+              <select name="year" id="year">
+                Year:
+              </select>
             </span>
             <span>
               <label class="unselectable" for="hour">Hour:</label>
@@ -36,12 +38,13 @@
               <label class="unselectable" for="minutes">Minutes:</label>
               <select name="minutes" id="minutes"></select>
             </span>
+            <span>
+              <label class="unselectable" for="capacity">Capacity:</label>
+              <select name="capacity" id="capacity"></select>
+            </span>  
           </div>
           <button type="submit">Schedule</button>
         </form>
-      </div>
-      <div class="booked-taxi">
-        hel
       </div>
     </div>
     <script src="login.js"></script>
