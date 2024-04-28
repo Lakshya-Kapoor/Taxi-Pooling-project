@@ -250,3 +250,14 @@ body {
 .tick-icon:hover {
   cursor: pointer;
 }
+
+.patch-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  outline: none;
+  cursor: pointer;
+}
+

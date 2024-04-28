@@ -247,11 +247,7 @@ app.get(
 
 app.patch("/join-taxi-pool", checkAuthenticated, async (req, res) => {
   let taxiId = req.body.taxiId;
-  try{
-    await Taxi.findOneAndUpdate({_id: taxiId}, {$push: {people: req.user._id}});
-  } catch(err) {
-    console.log(err);
-  }
+  await Taxi.findOneAndUpdate({_id: taxiId}, {$push: {people: req.user._id}});
   res.redirect("/taxiPooling");
 });
 

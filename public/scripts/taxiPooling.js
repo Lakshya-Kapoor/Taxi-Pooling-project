@@ -204,6 +204,7 @@ async function dropDownMenu(element, event) {
 
       const submitBtn = document.createElement("button");
       submitBtn.type = "submit";
+      submitBtn.classList.add("patch-button");
 
       const inputField = document.createElement("input");
       inputField.name = "taxiId";
