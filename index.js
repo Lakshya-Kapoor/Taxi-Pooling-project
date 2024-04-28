@@ -245,9 +245,13 @@ app.get(
   }
 );
 
-app.patch("/join-taxi-pool", checkAuthenticated, (req, res) => {
+app.patch("/join-taxi-pool", checkAuthenticated, async (req, res) => {
   let taxiId = req.body.taxiId;
-  console.log(taxiId);
+  try{
+    await Taxi.findOneAndUpdate({_id: taxiId}, {$push: {people: req.user._id}});
+  } catch(err) {
+    console.log(err);
+  }
   res.redirect("/taxiPooling");
 });
 
