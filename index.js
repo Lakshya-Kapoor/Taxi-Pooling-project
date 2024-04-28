@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 const path = require("path");
+const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const flash = require("express-flash");
@@ -27,9 +28,9 @@ async function main() {
 
 const initializePassport = require("./passport-config");
 initializePassport(
-  passport, 
-  async (rollNo) => await User.findOne({rollNo: rollNo}),
-  async (id) => await User.findById(id) 
+  passport,
+  async (rollNo) => await User.findOne({ rollNo: rollNo }),
+  async (id) => await User.findById(id)
 );
 
 app.set("view-engine", "ejs");
@@ -109,42 +110,63 @@ app.delete("/account", checkAuthenticated, (req, res) => {
   });
 });
 
-app.get("/taxi-data-day-wise/:day/:month/:year", checkAuthenticated, async (req, res) => {
-  let queryDate = new Date(
-    Number(req.params.year),
-    Number(req.params.month),
-    Number(req.params.day)
-  );
-  queryDate.setHours(0, 0, 0, 0);
-  let queryDateEnd = new Date(queryDate);
-  queryDateEnd.setHours(23, 59, 59, 999);
-  const noOfTaxis = await Taxi.countDocuments({ date: {$gte: queryDate, $lte: queryDateEnd}});
-  res.send(`${noOfTaxis}`);
-});
+app.get(
+  "/taxi-data-day-wise/:day/:month/:year",
+  checkAuthenticated,
+  async (req, res) => {
+    let queryDate = new Date(
+      Number(req.params.year),
+      Number(req.params.month),
+      Number(req.params.day)
+    );
+    queryDate.setHours(0, 0, 0, 0);
+    let queryDateEnd = new Date(queryDate);
+    queryDateEnd.setHours(23, 59, 59, 999);
+    const noOfTaxis = await Taxi.countDocuments({
+      date: { $gte: queryDate, $lte: queryDateEnd },
+    });
+    res.send(`${noOfTaxis}`);
+  }
+);
 
-app.get("/taxi-data-hour-wise/:day/:month/:year/:hour", checkAuthenticated, async (req, res) => {
-  let queryDate = new Date(
-    Number(req.params.year),
-    Number(req.params.month),
-    Number(req.params.day)
-  );
-  queryDate.setHours(0, 0, 0, 0);
-  let queryDateEnd = new Date(queryDate);
-  queryDateEnd.setHours(23, 59, 59, 999);
+app.get(
+  "/taxi-data-hour-wise/:day/:month/:year/:hour",
+  checkAuthenticated,
+  async (req, res) => {
+    let queryDate = new Date(
+      Number(req.params.year),
+      Number(req.params.month),
+      Number(req.params.day)
+    );
+    queryDate.setHours(0, 0, 0, 0);
+    let queryDateEnd = new Date(queryDate);
+    queryDateEnd.setHours(23, 59, 59, 999);
 
-  let queryTime = Number(req.params.hour);
-  const noOfTaxis = await Taxi.countDocuments({
-     $and: [
-      {date: {$gte: queryDate, $lte: queryDateEnd}},
-      {hours: queryTime} 
-    ]});
-  res.send(`${noOfTaxis}`);
-});
+    let queryTime = Number(req.params.hour);
+    const noOfTaxis = await Taxi.countDocuments({
+      $and: [
+        { date: { $gte: queryDate, $lte: queryDateEnd } },
+        { hours: queryTime },
+      ],
+    });
+    res.send(`${noOfTaxis}`);
+  }
+);
 
-app.post('/schedule-new-taxi', checkAuthenticated, (req, res) => {
-  const months = ["January", "February", "March", "April", "May", 
-    "June", "July", "August", "September", "October", "November",
-    "December"
+app.post("/schedule-new-taxi", checkAuthenticated, (req, res) => {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
   const day = Number(req.body.day);
   const month = months.indexOf(req.body.month);
@@ -153,7 +175,7 @@ app.post('/schedule-new-taxi', checkAuthenticated, (req, res) => {
   const minutes = Number(req.body.minutes);
   const capacity = Number(req.body.capacity);
   const user = req.user;
-  
+
   let date = new Date(year, month, day);
   let ISOdate = date.toISOString();
 
@@ -166,57 +188,67 @@ app.post('/schedule-new-taxi', checkAuthenticated, (req, res) => {
 
   newTaxi.people.push(user._id);
 
-  newTaxi.save()
+  newTaxi
+    .save()
     .then(() => {
       console.log("New taxi scheduled successfully");
     })
     .catch((err) => {
       console.log(err);
-    })
+    });
   res.redirect("/mySchedule");
 });
 
-app.get("/booked-taxis/:day/:month/:year/:hour", checkAuthenticated, async (req, res) => {
-  let queryDate = new Date(
-    Number(req.params.year),
-    Number(req.params.month),
-    Number(req.params.day)
-  );
-  queryDate.setHours(0, 0, 0, 0);
-  let queryDateEnd = new Date(queryDate);
-  queryDateEnd.setHours(23, 59, 59, 999);
-  let queryTime = Number(req.params.hour);
+app.get(
+  "/booked-taxis/:day/:month/:year/:hour",
+  checkAuthenticated,
+  async (req, res) => {
+    let queryDate = new Date(
+      Number(req.params.year),
+      Number(req.params.month),
+      Number(req.params.day)
+    );
+    queryDate.setHours(0, 0, 0, 0);
+    let queryDateEnd = new Date(queryDate);
+    queryDateEnd.setHours(23, 59, 59, 999);
+    let queryTime = Number(req.params.hour);
 
-  const taxis = await Taxi.find(
-    {
-      $and: [
-        { date: { $gte: queryDate, $lte: queryDateEnd } },
-        { hours: queryTime },
-      ],
-    },
-    { people: 1, hours: 1, minutes: 1 }
-  );
+    const taxis = await Taxi.find(
+      {
+        $and: [
+          { date: { $gte: queryDate, $lte: queryDateEnd } },
+          { hours: queryTime },
+        ],
+      },
+      { people: 1, hours: 1, minutes: 1 }
+    );
 
-  const taxiData = [];
+    const taxiData = [];
 
-  for (const taxi of taxis) {
-    const peopleData = [];
-    for (const person of taxi.people) {
-      peopleData.push(
-        {
+    for (const taxi of taxis) {
+      const peopleData = [];
+      for (const person of taxi.people) {
+        peopleData.push({
           name: (await User.findById(person, { name: 1, _id: 0 })).name,
-          phoneNo: (await User.findById(person, { phoneNo: 1, _id: 0 })).phoneNo
-        }
-      )
+          phoneNo: (await User.findById(person, { phoneNo: 1, _id: 0 }))
+            .phoneNo,
+        });
+      }
+      taxiData.push({
+        uniqueId: taxi._id,
+        time: String(taxi.hours) + ":" + String(taxi.minutes),
+        people: peopleData,
+      });
     }
-    taxiData.push({
-      time: String(taxi.hours) + ":" + String(taxi.minutes),
-      people: peopleData,
-    });
-  };
-  const jsonString = JSON.stringify(taxiData);
-  console.log(jsonString);
-  res.send(jsonString);
+    const jsonString = JSON.stringify(taxiData);
+    res.send(jsonString);
+  }
+);
+
+app.patch("/join-taxi-pool", checkAuthenticated, (req, res) => {
+  let taxiId = req.body.taxiId;
+  console.log(taxiId);
+  res.redirect("/taxiPooling");
 });
 
 function checkAuthenticated(req, res, next) {

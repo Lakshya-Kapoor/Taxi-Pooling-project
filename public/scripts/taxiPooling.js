@@ -132,7 +132,7 @@ async function renderDayCalendar(element) {
       str = i + ":00-" + (i + 1) + ":00";
     }
     let noOfTaxis = await fetch(`http://localhost:3000/taxi-data-hour-wise/${day}/${month}/${year}/${i}`)
-    htmlContent += `<div class="hour" onclick="toggleCabList(this, event)">
+    htmlContent += `<div class="hour">
     <div class="title">
     <p class="time-interval">${str}</p>
     <p class="no-of-taxis unselectable"><span class='taxi-pool-no'>${await noOfTaxis.text()}</span> taxis</p>
@@ -183,31 +183,54 @@ async function dropDownMenu(element, event) {
     for (const taxi of response){
       let peopleData = '';
       for (const people of taxi.people){
-        console.log(people);
-        console.log(people.name);
-        console.log(people.phoneNo);
         peopleData += `<p>${people.name} ${people.phoneNo}</p>`;
       }
-      hourDiv.innerHTML += `
-      <div class="taxi-event">
-        <div class="join-pool">
-          <p class="time">${taxi.time}</p>
-          <img src="tick.svg" alt="accept" class="tick-icon">
-        </div>
-        <div class="details">
-          ${peopleData}
-        </div>
-      </div>`;
+
+      const taxiEvent = document.createElement("div");
+      taxiEvent.classList.add("taxi-event");
+
+      const details = document.createElement("div");
+      details.classList.add("details");
+      details.innerHTML = peopleData;
+
+      const form = document.createElement("form");
+      form.classList.add("join-pool");
+      form.action = "/join-taxi-pool?_method=PATCH";
+      form.method = "post";
+      
+      const time = document.createElement("p");
+      time.classList.add("time");
+      time.textContent = taxi.time;
+
+      const submitBtn = document.createElement("button");
+      submitBtn.type = "submit";
+
+      const inputField = document.createElement("input");
+      inputField.name = "taxiId";
+      inputField.value = taxi.uniqueId;
+      inputField.type = "hidden";
+
+      const tickIcon = document.createElement("img");
+      tickIcon.src = "tick.svg";
+      tickIcon.alt = "accept";
+      tickIcon.classList.add("tick-icon");
+
+      hourDiv.appendChild(taxiEvent);
+      
+      taxiEvent.appendChild(form);
+      taxiEvent.appendChild(details);
+      form.appendChild(time);
+      form.appendChild(inputField);
+      form.appendChild(submitBtn);
+      submitBtn.appendChild(tickIcon);
     }
   } catch(err) {
     console.log(err);
   }
-
 }
 
 function dropUp(element, event) {
-  if (event != null)
-    event.stopPropagation();
+  
   element.parentNode.querySelector(".dropdown-icon").classList.remove("hidden");
   element.parentNode.querySelector(".dropup-icon").classList.add("hidden");
   element.parentNode.parentNode.querySelector('.taxi-event').remove();  
