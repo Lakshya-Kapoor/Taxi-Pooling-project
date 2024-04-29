@@ -77,7 +77,7 @@ app.post(
   "/login",
   checkNotAuthenticated,
   passport.authenticate("local", {
-    successRedirect: "/taxiPooling",
+    successRedirect: "/mySchedule",
     failureRedirect: "/login",
     failureFlash: true, // Error message in config files shall be displayed
   })
@@ -153,7 +153,7 @@ app.get(
   }
 );
 
-app.post("/schedule-new-taxi", checkAuthenticated, (req, res) => {
+app.post("/schedule-new-taxi", checkAuthenticated, async (req, res) => {
   const months = [
     "January",
     "February",
@@ -188,14 +188,8 @@ app.post("/schedule-new-taxi", checkAuthenticated, (req, res) => {
 
   newTaxi.people.push(user._id);
 
-  newTaxi
-    .save()
-    .then(() => {
-      console.log("New taxi scheduled successfully");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  await newTaxi.save()
+  await User.findOneAndUpdate({_id: user._id}, {$push: {scheduledTaxis: newTaxi._id}});
   res.redirect("/mySchedule");
 });
 
@@ -230,8 +224,7 @@ app.get(
       for (const person of taxi.people) {
         peopleData.push({
           name: (await User.findById(person, { name: 1, _id: 0 })).name,
-          phoneNo: (await User.findById(person, { phoneNo: 1, _id: 0 }))
-            .phoneNo,
+          phoneNo: (await User.findById(person, { phoneNo: 1, _id: 0 })).phoneNo,
         });
       }
       taxiData.push({
@@ -248,8 +241,41 @@ app.get(
 app.patch("/join-taxi-pool", checkAuthenticated, async (req, res) => {
   let taxiId = req.body.taxiId;
   await Taxi.findOneAndUpdate({_id: taxiId}, {$push: {people: req.user._id}});
-  res.redirect("/taxiPooling");
+  await User.findOneAndUpdate({_id: req.user._id}, {$push: {scheduledTaxis: taxiId}});
+  res.redirect("/mySchedule");
 });
+
+app.get("/my-taxis", checkAuthenticated, async (req, res) => {
+  const user = req.user;
+  const taxis = await Taxi.find({people: { $in: [user._id]}}, {capacity: 0});
+  
+  const taxiData = [];
+  for (const taxi of taxis) {
+    const peopleData = [];
+    for (const person of taxi.people) {
+      peopleData.push({
+        name: (await User.findById(person, { name: 1, _id: 0 })).name,
+        phoneNo: (await User.findById(person, { phoneNo: 1, _id: 0 })).phoneNo,
+      });
+    }
+    const date = String(new Date(taxi.date)).substring(0, 10);
+    taxiData.push({
+      uniqueId: taxi._id,
+      date: date,
+      time: String(taxi.hours) + ":" + String(taxi.minutes),
+      people: peopleData,
+    });
+  }
+  const jsonString = JSON.stringify(taxiData);
+  res.send(jsonString);
+});
+
+app.patch("/cancel-booking", checkAuthenticated, async (req, res) => {
+  const user = req.user;
+  const taxiId = req.body.taxiId;
+  await Taxi.findByIdAndUpdate(taxiId, { $pull: { people: user._id}});
+  res.redirect("/mySchedule");
+})
 
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -260,7 +286,7 @@ function checkAuthenticated(req, res, next) {
 
 function checkNotAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    return res.redirect("/taxiPooling");
+    return res.redirect("/mySchedule");
   }
   next();
 }

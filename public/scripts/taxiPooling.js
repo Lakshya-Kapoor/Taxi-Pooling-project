@@ -162,8 +162,6 @@ function toggleCabList(hourDiv) {
 }
 
 async function dropDownMenu(element, event) {
-  if (event != null)
-    event.stopPropagation();
   element.parentNode.querySelector(".dropdown-icon").classList.add("hidden");
   element.parentNode.querySelector(".dropup-icon").classList.remove("hidden");
   
@@ -176,62 +174,30 @@ async function dropDownMenu(element, event) {
   let year = document.querySelector("#year-display").textContent;
   let hour = titleDiv.querySelector(".time-interval").innerText.substring(0, 2);
   
-  try {
-    let jsonString = await fetch(`http://localhost:3000/booked-taxis/${day}/${month}/${year}/${hour}`);
-    let response = await jsonString.json(); // Parsing the JSON data
-    
-    for (const taxi of response){
-      let peopleData = '';
-      for (const people of taxi.people){
-        peopleData += `<p>${people.name} ${people.phoneNo}</p>`;
-      }
-
-      const taxiEvent = document.createElement("div");
-      taxiEvent.classList.add("taxi-event");
-
-      const details = document.createElement("div");
-      details.classList.add("details");
-      details.innerHTML = peopleData;
-
-      const form = document.createElement("form");
-      form.classList.add("join-pool");
-      form.action = "/join-taxi-pool?_method=PATCH";
-      form.method = "post";
-      
-      const time = document.createElement("p");
-      time.classList.add("time");
-      time.textContent = taxi.time;
-
-      const submitBtn = document.createElement("button");
-      submitBtn.type = "submit";
-      submitBtn.classList.add("patch-button");
-
-      const inputField = document.createElement("input");
-      inputField.name = "taxiId";
-      inputField.value = taxi.uniqueId;
-      inputField.type = "hidden";
-
-      const tickIcon = document.createElement("img");
-      tickIcon.src = "tick.svg";
-      tickIcon.alt = "accept";
-      tickIcon.classList.add("tick-icon");
-
-      hourDiv.appendChild(taxiEvent);
-      
-      taxiEvent.appendChild(form);
-      taxiEvent.appendChild(details);
-      form.appendChild(time);
-      form.appendChild(inputField);
-      form.appendChild(submitBtn);
-      submitBtn.appendChild(tickIcon);
+  let jsonString = await fetch(`http://localhost:3000/booked-taxis/${day}/${month}/${year}/${hour}`);
+  let response = await jsonString.json(); // Parsing the JSON data
+  
+  for (const taxi of response){
+    let peopleData = '';
+    for (const people of taxi.people){
+      peopleData += `<p>${people.name} ${people.phoneNo}</p>`;
     }
-  } catch(err) {
-    console.log(err);
+
+    hourDiv.innerHTML += `
+      <div class="taxi-event">
+        <form class="join-pool" action="/join-taxi-pool?_method=PATCH" method="post">
+          <p class="time">${taxi.time}</p>
+          <input type="hidden" name="taxiId" value="${taxi.uniqueId}">
+          <button type="submit" class="patch-button">
+            <img src="tick.svg" alt="accept" class="tick-icon">
+          </button>
+        </form>
+        <div class="details">${peopleData}</div>
+      </div>`;
   }
 }
 
 function dropUp(element, event) {
-  
   element.parentNode.querySelector(".dropdown-icon").classList.remove("hidden");
   element.parentNode.querySelector(".dropup-icon").classList.add("hidden");
   element.parentNode.parentNode.querySelector('.taxi-event').remove();  

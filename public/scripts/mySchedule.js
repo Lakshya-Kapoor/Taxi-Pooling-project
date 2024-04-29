@@ -137,9 +137,41 @@ minuteSelect.value = "00";
 const capacitySelect = document.getElementById("capacity");
 
 (function populateCapacity() {
-    for (let i = 2; i <= 10; i++) {
-      const option = document.createElement("option");
-      option.textContent = i;
-      capacitySelect.appendChild(option);
+  for (let i = 2; i <= 10; i++) {
+    const option = document.createElement("option");
+    option.textContent = i;
+    capacitySelect.appendChild(option);
+  }
+})();
+
+async function displayBookedTaxis() {
+  const jsonString = await fetch("http://localhost:3000/my-taxis");
+  const response = await jsonString.json();
+
+  const contianer = document.querySelector("#mySchedule-wrapper");
+
+  for (const taxi of response) {
+    let peopleData = '';
+    for (const people of taxi.people){
+      peopleData += `<p>${people.name} ${people.phoneNo}</p>`;
     }
-  })();
+    contianer.innerHTML += `
+      <div class="booked-taxi">
+        <h2>Booked Taxi</h2>
+        <div class="date-time">
+          <p>${taxi.date}</p>
+          <p>${taxi.time}</p>
+        </div>
+        <div class="people">
+          ${peopleData}
+        </div>
+        <form action="/cancel-booking?_method=PATCH" method="post">
+          <input type="hidden" name="taxiId" value="${taxi.uniqueId}">
+          <button type="submit">Cancel</button>
+        </form>
+      </div>
+    `
+  }
+}
+
+displayBookedTaxis();

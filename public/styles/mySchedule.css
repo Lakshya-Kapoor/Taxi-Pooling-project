@@ -47,13 +47,24 @@ span select::after {
   user-select: none;
 }
 
-.new-booking {
+.new-booking, .booked-taxi {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.new-booking {
   gap: 10%;
 }
 
+.booked-taxi {
+  position: relative;
+}
+
+.booked-taxi button {
+  position: absolute;
+  bottom: 7%;
+}
 .new-booking,
 .booked-taxi {
   border: 1px rgba(0, 0, 0, 0.5) solid;
@@ -63,6 +74,16 @@ span select::after {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+.date-time {
+  align-self: stretch;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 7%;
+}
+
+.people {
+  margin-top: 15%;
+}
 .span-wrapper {
   display: flex;
   flex-direction: column;
