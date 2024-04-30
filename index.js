@@ -123,7 +123,10 @@ app.get(
     let queryDateEnd = new Date(queryDate);
     queryDateEnd.setHours(23, 59, 59, 999);
     const noOfTaxis = await Taxi.countDocuments({
-      date: { $gte: queryDate, $lte: queryDateEnd },
+      $and: [
+        {date: { $gte: queryDate, $lte: queryDateEnd }},
+        { people: { $nin: [req.user._id] } }
+      ]
     });
     res.send(`${noOfTaxis}`);
   }
@@ -147,6 +150,7 @@ app.get(
       $and: [
         { date: { $gte: queryDate, $lte: queryDateEnd } },
         { hours: queryTime },
+        { people: { $nin: [req.user._id] } }
       ],
     });
     res.send(`${noOfTaxis}`);
@@ -212,6 +216,7 @@ app.get(
         $and: [
           { date: { $gte: queryDate, $lte: queryDateEnd } },
           { hours: queryTime },
+          { people: { $nin: [req.user._id] } }
         ],
       },
       { people: 1, hours: 1, minutes: 1 }
@@ -274,6 +279,9 @@ app.patch("/cancel-booking", checkAuthenticated, async (req, res) => {
   const user = req.user;
   const taxiId = req.body.taxiId;
   await Taxi.findByIdAndUpdate(taxiId, { $pull: { people: user._id}});
+  const noOfPeopleInTaxi = ((await Taxi.findById(taxiId, {people: 1, _id:0})).people).length;
+  if (noOfPeopleInTaxi == 0)
+    await Taxi.findByIdAndDelete(taxiId);
   res.redirect("/mySchedule");
 })
 

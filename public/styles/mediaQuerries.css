@@ -71,9 +71,6 @@
     font-size: 2rem; /* Adjust font size as needed */
     font-weight: 400;
   }
-  .taxis {
-    display: none;
-  }
   .no-of-taxis {
     font-size: 1rem;
   }
@@ -93,9 +90,6 @@
   .date {
     font-size: 1.3rem; /* Adjust font size as needed */
     /* margin-bottom: 60%; Adjust margin as needed */
-  }
-  .taxis {
-    display: none;
   }
   .taxi-pool-no {
     font-size: 2rem; /* Adjust font size as needed */
