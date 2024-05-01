@@ -278,6 +278,7 @@ app.get("/my-taxis", checkAuthenticated, async (req, res) => {
 app.patch("/cancel-booking", checkAuthenticated, async (req, res) => {
   const user = req.user;
   const taxiId = req.body.taxiId;
+  await User.findByIdAndUpdate(user._id, { $pull: { scheduledTaxis: taxiId }});
   await Taxi.findByIdAndUpdate(taxiId, { $pull: { people: user._id}});
   const noOfPeopleInTaxi = ((await Taxi.findById(taxiId, {people: 1, _id:0})).people).length;
   if (noOfPeopleInTaxi == 0)
