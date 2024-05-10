@@ -145,7 +145,7 @@ const capacitySelect = document.getElementById("capacity");
 })();
 
 async function displayBookedTaxis() {
-  const jsonString = await fetch("http://localhost:3000/my-taxis");
+  const jsonString = await fetch("http://localhost:3000/taxi-data/my-taxis");
   const response = await jsonString.json();
 
   const contianer = document.querySelector("#mySchedule-wrapper");

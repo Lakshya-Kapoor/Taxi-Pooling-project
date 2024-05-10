@@ -40,7 +40,7 @@ async function renderCalendar() {
 
   for (let i = start; i > 0; i--) {
     try{
-      let noOfTaxis = await fetch(`http://localhost:3000/taxi-data-day-wise/${endDatePrev-i+1}/${month>0?month-1:11}/${year}`);
+      let noOfTaxis = await fetch(`http://localhost:3000/taxi-data/day-wise/${endDatePrev-i+1}/${month>0?month-1:11}/${year}`);
       
       datesHtml += `<div class="clickable-div" onclick="renderDayCalendar(this)">
           <div class="date">
@@ -58,7 +58,7 @@ async function renderCalendar() {
 
   for (let i = 1; i <= endDate; i++) {
     try {
-      let noOfTaxis = await fetch(`http://localhost:3000/taxi-data-day-wise/${i}/${month}/${year}`)
+      let noOfTaxis = await fetch(`http://localhost:3000/taxi-data/day-wise/${i}/${month}/${year}`)
       
       datesHtml += `<div class="clickable-div" onclick="renderDayCalendar(this)">
         <div class="date">
@@ -76,7 +76,7 @@ async function renderCalendar() {
 
   for (let i = end; i < 6; i++) {
     try {
-      let noOfTaxis = await fetch(`http://localhost:3000/taxi-data-day-wise/${i-end+1}/${month<11?month+1:0}/${year}`)
+      let noOfTaxis = await fetch(`http://localhost:3000/taxi-data/day-wise/${i-end+1}/${month<11?month+1:0}/${year}`)
       
       datesHtml += `<div class="clickable-div" onclick="renderDayCalendar(this)">
       <div class="date">
@@ -131,7 +131,7 @@ async function renderDayCalendar(element) {
     } else {
       str = i + ":00-" + (i + 1) + ":00";
     }
-    let noOfTaxis = await fetch(`http://localhost:3000/taxi-data-hour-wise/${day}/${month}/${year}/${i}`)
+    let noOfTaxis = await fetch(`http://localhost:3000/taxi-data/hour-wise/${day}/${month}/${year}/${i}`)
     htmlContent += `<div class="hour">
     <div class="title">
     <p class="time-interval">${str}</p>
@@ -174,7 +174,7 @@ async function dropDownMenu(element, event) {
   let year = document.querySelector("#year-display").textContent;
   let hour = titleDiv.querySelector(".time-interval").innerText.substring(0, 2);
   
-  let jsonString = await fetch(`http://localhost:3000/booked-taxis/${day}/${month}/${year}/${hour}`);
+  let jsonString = await fetch(`http://localhost:3000/taxi-data/booked/${day}/${month}/${year}/${hour}`);
   let response = await jsonString.json(); // Parsing the JSON data
   
   for (const taxi of response){
