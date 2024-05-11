@@ -26,7 +26,7 @@ async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/realTaxi");
 }
 
-const initializePassport = require("./passport-config");
+const initializePassport = require("./passport-config.js");
 initializePassport(
   passport,
   async (rollNo) => await User.findOne({ rollNo: rollNo }),
@@ -51,7 +51,7 @@ app.use(passport.session());
 app.use(methodOverride("_method"));
 
 // signup route
-const signupRouter = require("./routes/signup");
+const signupRouter = require("./routes/signup.js");
 app.use("/signup", signupRouter);
 
 // login route
