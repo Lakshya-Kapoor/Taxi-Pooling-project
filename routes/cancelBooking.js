@@ -3,6 +3,10 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Taxi = require("../models/taxi.js");
 const User = require("../models/user.js");
+const {
+  checkAuthenticated,
+  checkNotAuthenticated,
+} = require("../controllers/check-authentication");
 
 router.patch("/", checkAuthenticated, async (req, res) => {
   const user = req.user;
@@ -14,12 +18,5 @@ router.patch("/", checkAuthenticated, async (req, res) => {
   if (noOfPeopleInTaxi == 0) await Taxi.findByIdAndDelete(taxiId);
   res.redirect("/mySchedule");
 });
-
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-}
 
 module.exports = router;

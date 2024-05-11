@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
+const { checkAuthenticated, checkNotAuthenticated } = require('../controllers/check-authentication');
+
 router.get("/", checkNotAuthenticated, (req, res) => {
   res.render("login.ejs");
 });
@@ -15,12 +17,5 @@ router.post(
     failureFlash: true, // Error message in config files shall be displayed
   })
 );
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect("/mySchedule");
-  }
-  next();
-}
 
 module.exports = router;

@@ -50,49 +50,45 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride("_method"));
 
+// signup route
 const signupRouter = require("./routes/signup");
 app.use("/signup", signupRouter);
 
+// login route
 const loginRouter = require('./routes/login.js');
 app.use("/login", loginRouter);
 
+// my schedule route
 const myScheduleRouter = require('./routes/mySchedule.js');
 app.use('/mySchedule', myScheduleRouter)
 
+// taxipooling route
 const taxiPoolingRouter = require('./routes/taxiPooling.js');
 app.use('/taxiPooling', taxiPoolingRouter);
 
+// about us route
 const aboutUsRouter = require('./routes/aboutUs.js');
 app.use('/aboutUs', aboutUsRouter);
 
+// account route
 const accountRouter = require('./routes/account.js');
 app.use('/account', accountRouter);
 
+// taxi data retreival route
 const taxiDataRouter = require('./routes/taxi-data.js');
 app.use('/taxi-data', taxiDataRouter);
 
+// scheduling new taxi route
 const newTaxiRouter = require('./routes/scheduleNewTaxi.js');
 app.use('/schedule-new-taxi', newTaxiRouter);
 
+// Join a taxi pool route
 const joinRouter = require('./routes/joinTaxiPool.js');
 app.use('/join-taxi-pool', joinRouter);
 
+// cancel taxi route
 const cancelRouter = require('./routes/cancelBooking.js');
 app.use('/cancel-booking', cancelRouter);
-
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-}
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect("/mySchedule");
-  }
-  next();
-}
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port: ${PORT}`);
