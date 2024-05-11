@@ -41,10 +41,10 @@ async function renderCalendar() {
   for (let i = start; i > 0; i--) {
     try{
       let noOfTaxis = await fetch(`http://localhost:3000/taxi-data/day-wise/${endDatePrev-i+1}/${month>0?month-1:11}/${year}`);
-      
-      datesHtml += `<div class="clickable-div" onclick="renderDayCalendar(this)">
+      let monthNo = month > 0 ? month - 1 : 11;
+      datesHtml += `<div class="clickable-div" onclick="renderDayCalendar(this, ${monthNo})">
           <div class="date">
-              ${endDatePrev - i + 1} <span class="date-month">${months[month > 0 ? month - 1 : 11].substring(0, 3)}</span>
+              ${endDatePrev - i + 1} <span class="date-month">${months[monthNo].substring(0, 3)}</span>
           </div>
           <div class="no-of-taxis  unselectable">
           <span class='taxi-pool-no'>${await noOfTaxis.text()}</span>
@@ -59,10 +59,10 @@ async function renderCalendar() {
   for (let i = 1; i <= endDate; i++) {
     try {
       let noOfTaxis = await fetch(`http://localhost:3000/taxi-data/day-wise/${i}/${month}/${year}`)
-      
-      datesHtml += `<div class="clickable-div" onclick="renderDayCalendar(this)">
+      let monthNo = month
+      datesHtml += `<div class="clickable-div" onclick="renderDayCalendar(this, ${monthNo})">
         <div class="date">
-        ${i} <span class="date-month">${months[month].substring(0, 3)}</span>
+        ${i} <span class="date-month">${months[monthNo].substring(0, 3)}</span>
         </div>
         <div class="no-of-taxis  unselectable">
         <span class='taxi-pool-no'>${await noOfTaxis.text()}</span> 
@@ -77,10 +77,10 @@ async function renderCalendar() {
   for (let i = end; i < 6; i++) {
     try {
       let noOfTaxis = await fetch(`http://localhost:3000/taxi-data/day-wise/${i-end+1}/${month<11?month+1:0}/${year}`)
-      
-      datesHtml += `<div class="clickable-div" onclick="renderDayCalendar(this)">
+      let monthNo = month < 11 ? month + 1 : 0;
+      datesHtml += `<div class="clickable-div" onclick="renderDayCalendar(this, ${monthNo})">
       <div class="date">
-      ${i - end + 1} <span class="date-month">${months[month < 11 ? month + 1 : 0].substring(0, 3)}</span>
+      ${i - end + 1} <span class="date-month">${months[monthNo].substring(0, 3)}</span>
       </div>
       <div class="no-of-taxis  unselectable">
         <span class='taxi-pool-no'>${await noOfTaxis.text()}</span>
@@ -108,7 +108,8 @@ function changeCalendar(num) {
   renderCalendar();
 }
 
-async function renderDayCalendar(element) {
+async function renderDayCalendar(element, monthNo) {
+  console.log('day calendar opened');
   const dayCalendar = document.querySelector("#day-calendar");
 
   let htmlContent = `
@@ -118,10 +119,13 @@ async function renderDayCalendar(element) {
   </div>`;
 
   let year = Number(document.querySelector("#year-display").textContent)
-  let month = months.indexOf(document.querySelector("#month-display").textContent)
+  let month = Number(monthNo)
   let day = (element.querySelector(".date").textContent)
   day = Number(day.trim().split(" ")[0])
 
+  console.log(day);
+  console.log(month);
+  console.log(year);
   for (let i = 0; i <= 23; i++) {
     let str;
     if (i <= 8) {
@@ -136,7 +140,7 @@ async function renderDayCalendar(element) {
     <div class="title">
     <p class="time-interval">${str}</p>
     <p class="no-of-taxis unselectable"><span class='taxi-pool-no'>${await noOfTaxis.text()}</span> taxis</p>
-    <img src="dropdown-icon.svg" alt="dropdown-icon" class="dropdown-icon" onclick="dropDownMenu(this, event)">
+    <img src="dropdown-icon.svg" alt="dropdown-icon" class="dropdown-icon" onclick="dropDownMenu(this, event, ${month})">
     <img src="dropup-icon.svg" alt="dropup-icon" class="dropup-icon hidden" onclick="dropUp(this, event)">
     </div>
     </div>`;
@@ -161,7 +165,8 @@ function toggleCabList(hourDiv) {
   }
 }
 
-async function dropDownMenu(element, event) {
+async function dropDownMenu(element, event, monthNo) {
+  console.log('drop down menu clicked');
   element.parentNode.querySelector(".dropdown-icon").classList.add("hidden");
   element.parentNode.querySelector(".dropup-icon").classList.remove("hidden");
   
@@ -170,7 +175,7 @@ async function dropDownMenu(element, event) {
   let dayCalendar = hourDiv.parentNode;
   let calendarHeading = dayCalendar.querySelector("#calendar-heading");
   let day = calendarHeading.querySelector(".day").innerText.trim().split(" ")[0];
-  let month = months.indexOf(document.querySelector("#month-display").textContent);
+  let month = monthNo;
   let year = document.querySelector("#year-display").textContent;
   let hour = titleDiv.querySelector(".time-interval").innerText.substring(0, 2);
   
@@ -198,6 +203,7 @@ async function dropDownMenu(element, event) {
 }
 
 function dropUp(element, event) {
+  console.log('drop up menu clicked');
   element.parentNode.querySelector(".dropdown-icon").classList.remove("hidden");
   element.parentNode.querySelector(".dropup-icon").classList.add("hidden");
   element.parentNode.parentNode.querySelector('.taxi-event').remove();  
