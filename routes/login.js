@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-const { checkAuthenticated, checkNotAuthenticated } = require('../controllers/check-authentication');
+const {
+  checkAuthenticated,
+  checkNotAuthenticated,
+} = require("../controllers/check-authentication");
 
 router.get("/", checkNotAuthenticated, (req, res) => {
   res.render("login.ejs");
