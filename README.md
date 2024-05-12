@@ -1,6 +1,6 @@
 # Taxi Buddy
 
-This repository contains the frontend and the backend code for the taxi buddy website. Taxi Buddy is the one stop solution that allows students to pool taxis from uni to the airport and vice verca.
+This repository contains the frontend and the backend code for the taxi buddy website. Taxi Buddy is the one stop solution that allows students to pool taxis from uni to the airport and vice versa.
 
 ## Environment variables
 
