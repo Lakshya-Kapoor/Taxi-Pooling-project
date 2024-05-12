@@ -151,8 +151,8 @@ async function displayBookedTaxis() {
   const contianer = document.querySelector("#mySchedule-wrapper");
 
   for (const taxi of response) {
-    let peopleData = '';
-    for (const people of taxi.people){
+    let peopleData = "";
+    for (const people of taxi.people) {
       peopleData += `<p>${people.name} ${people.phoneNo}</p>`;
     }
     contianer.innerHTML += `
@@ -170,7 +170,7 @@ async function displayBookedTaxis() {
           <button type="submit">Cancel</button>
         </form>
       </div>
-    `
+    `;
   }
 }
 

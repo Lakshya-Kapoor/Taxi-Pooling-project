@@ -41,7 +41,6 @@
   .credits div {
     font-size: 4.5rem;
   }
-  
 }
 
 @media screen and (max-width: 1200px) {
@@ -101,7 +100,7 @@
     font-size: 1rem;
   }
   .day-of-week {
-  text-align: center;
+    text-align: center;
     font-size: 1.5rem;
   }
   #day-calendar {
@@ -113,7 +112,6 @@
   }
   .title .no-of-taxis {
     flex-direction: row;
-
   }
 }
 

@@ -23,12 +23,11 @@ function toggleMenu() {
 const createBtn = document.querySelector("#create-account");
 const loginBtn = document.querySelector("#login");
 
-try{
+try {
   createBtn.addEventListener("click", () => {
     window.location.href = "signup";
   });
-}
-catch{
+} catch {
   loginBtn.addEventListener("click", () => {
     window.location.href = "login";
   });
