@@ -54,3 +54,7 @@ To get started with the backend, follow these steps:
 - `POST /schedule-new-taxi`: Schedule a new taxi pool.
 - `PATCH /join-taxi-pool`: Join an existing taxi pool.
 - `PATCH /cancel-booking`: Leave an existing taxi pool.
+
+## NOTE
+
+While reviewing the project, you may come across some minor bugs that require fixing. I acknowledge these issues but have chosen to overlook them for now, as I have successfully achieved my goal of completing my first full-stack project from end to end.
